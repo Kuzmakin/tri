@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>SPA в одному файлі</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+
+    nav a {
+      margin: 0 10px;
+      cursor: pointer;
+      color: blue;
+      font-weight: bold;
+    }
+
+    section {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    section.fade-in {
+      opacity: 1;
+    }
+
+    img {
+      max-width: 300px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a data-link="home">Перше зображення</a>
+    <a data-link="about">Друге зображення</a>
+  </nav>
+
+  <section id="start" class="active fade-in">
+    <h1>Виберіть зображення</h1>
+  </section>
+
+  <section id="home">
+    <h1>Перше зображення</h1>
+    <img src="01.svg" alt="SVG 1" />
+  </section>
+
+  <section id="about">
+    <h1>Сторінка "Друге зображення"</h1>
+    <img src="02.svg" alt="SVG 2" />
+  </section>
+
+  <script>
+    const links = document.querySelectorAll("[data-link]");
+    const sections = document.querySelectorAll("section");
+
+    function showSection(id) {
+      sections.forEach(section => {
+        section.classList.remove("active", "fade-in");
+        section.style.display = "none";
+      });
+
+      const target = document.getElementById(id);
+      target.style.display = "block";
+      target.classList.add("active");
+      setTimeout(() => {
+        target.classList.add("fade-in");
+      }, 10);
+    }
+
+    links.forEach(link => {
+      link.addEventListener("click", () => {
+        const id = link.dataset.link;
+        showSection(id);
+      });
+    });
+  </script>
+
+</body>
+</html>
